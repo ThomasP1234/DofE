@@ -1,1 +1,1 @@
-# DofE
+# Duke of Edinburgh
