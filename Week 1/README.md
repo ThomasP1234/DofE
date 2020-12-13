@@ -11,7 +11,7 @@
   - Installing vscode
 - Created a test program
   - Simple HelloWorld program
-  - Used vscode to push to my github account
+- Used vscode to push to my github account
 ## What I learnt
 - How to set up a development environment for python
 - How souce control works
