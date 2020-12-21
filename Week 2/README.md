@@ -5,12 +5,13 @@
 ## Work Done
 - Using comments
 - Casting
-- Asigning Variables
+- Assigning Variables
 - Global Variables and Scopes
 ## What I learnt
 - Single line and multiline comments
 - Casting is used to convert a variable from one type to another
-- Asigning Variables
+- Assigning Variables
   - Many Values to Multiple Variables
   - One Value to Multiple Variables
   - Unpacking a list to Multiple Variables
+  - Global Variables can be assigned in functions using the global keyword
