@@ -7,4 +7,4 @@
 - Inheritence (ref: https://www.w3schools.com/python/)
 ## What I learnt
 - Classes
--Inheritence
+- Inheritence
