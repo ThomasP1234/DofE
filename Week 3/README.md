@@ -1,6 +1,6 @@
 # Week 3 Work
 ## Plan
-- Work through more of the online tutorials (ref: ##https://www.w3schools.com/python)
+- Work through more of the online tutorials (ref: https://www.w3schools.com/python)
 - Test the code in local environment and push to github
 ## Work Done
 - Slicing Strings
