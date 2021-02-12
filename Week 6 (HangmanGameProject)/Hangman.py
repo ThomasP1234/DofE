@@ -13,7 +13,7 @@ for letter in answer_uppercase:
     if(letter != " " and letter not in solution_letters):
         solution_letters += letter
 solution_letter_count = len(solution_letters)
-print(solution_letters, solution_letter_count)
+# print(solution_letters, solution_letter_count)
 
 valid_letters = []
 invalid_letters = []
