@@ -1,6 +1,6 @@
 # Week 11
 ## Plan
-- Add a save and a load feture to the game 
+- Add a save and a load feature to the game 
 ## Work Done
 - Wrote variables to json file on command
 - Read the variables from the json file on command
