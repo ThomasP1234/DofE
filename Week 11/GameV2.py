@@ -89,6 +89,7 @@ while True:
     elif action == "load":
         Load(filename)
         playerlocation = jsondata["playerlocation"]
+        inventory = jsondata["inventory"]
         print("Game loaded")
         print("playerlocation: ", playerlocation)
         print("inventory: ", inventory)
