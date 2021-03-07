@@ -14,3 +14,4 @@
   - Press enter to roll the 2 dice each
 ## What I learnt
 - Checking that a user is autherized to play
+- Program flow and structure
