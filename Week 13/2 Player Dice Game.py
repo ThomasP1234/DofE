@@ -1,6 +1,7 @@
 # Author: Thomas Preston
 
 import random
+import json
 
 authorisedPlayers = ["Tom", "John", "Bob", "Dave"]
 
@@ -12,7 +13,7 @@ def getAuthorisedPlayers():
 
     if player1 not in authorisedPlayers or player2 not in authorisedPlayers:
         print('Unauthorised to play')
-        exit
+        exit()
 
 dicePossibility = [1, 2, 3, 4, 5, 6]
 p1Score = 0
@@ -113,3 +114,38 @@ else:
         else:
             print('Equal - redo')
             continue
+
+filename = "HighScores.json"
+
+
+
+def add_score(playerName, score):
+    newScore = {"name": playerName, "score": score}
+    HighScores.append(newScore)
+
+fi = open(filename, "r")
+High = fi.read()
+HighScores = json.loads(High)
+
+
+add_score(player1, p1Score)
+add_score(player2, p2Score)
+
+# print(json.dumps(highscores, indent=4))
+
+sorted_highscores = sorted(HighScores, key=lambda x: x["score"], reverse=True)
+# print(json.dumps(sorted_highscores, indent=4))
+
+highscoretable = sorted_highscores[:5]
+
+print('')
+print('Highscores:')
+
+for entry in highscoretable:
+    print("{0} = {1}".format(entry["name"], entry["score"]))
+
+# print(json.dumps(highscoretable, indent=4))
+# print(highscoretable)
+
+with open(filename, 'w') as outfile:
+        json.dump(highscoretable, outfile)
