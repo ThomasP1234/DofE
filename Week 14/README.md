@@ -1,6 +1,6 @@
 # Week 14
 ## Plan
-- using Tkinter, create a advanced version of the previous weeks dice game
+- Using Tkinter, create a advanced version of the previous weeks dice game
 ## Work Done
 - Learnt the basics of Tkinter 
 - Used pillow to put images on my tkinter canvas
