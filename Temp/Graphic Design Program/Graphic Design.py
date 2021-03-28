@@ -1,5 +1,6 @@
 # Author: Thomas Preston
 
+# Imports
 from tkinter import *
 import json
 from tkinter import colorchooser, filedialog, messagebox
@@ -22,17 +23,11 @@ class Paint():
 
         self.root = Tk()
         self.root.geometry("{0}x{1}+300+200".format(self.root_width, self.root_height))
-        # self.root.geometry("{0}x{1}".format(self.root_width, self.root_height))
         self.root.title("Canvas")
         self.root.resizable(False, False)
         self.root.configure(bg=self.background_colour)
 
         self.root.iconbitmap('Paintbrush.ico')
-        
-        # self.canvas = Canvas(self.root, bg = self.canvas_colour, bd = 5, relief = GROOVE, height = self.root_height-35, width = self.root_width-35)
-        # self.canvas.place(x = 10, y = 10)
-
-        # self.canvas.bind("<B1-Motion>", self.paint)
 
         # Tools Window
         self.tools_width = 765
@@ -47,7 +42,7 @@ class Paint():
         self.tools.iconbitmap('Paintbrush.ico')
 
 
-        self.colour_frame = LabelFrame(self.tools, text = "Colours", font = ('arial', 15), bd = 5, relief = RIDGE, bg = self.background_colour)
+        self.colour_frame = LabelFrame(self.tools, text = "Colour Pallet", font = ('arial', 15), bd = 5, relief = RIDGE, bg = self.background_colour)
         self.colour_frame.configure(foreground = "white")
         self.colour_frame.place(x = 0, y = 0, width = 260, height = 90)
 
@@ -92,7 +87,7 @@ class Paint():
         self.custom_Colour_Button["state"] = DISABLED
 
 
-        self.pen_size_scale_frame = LabelFrame(self.tools, text = "Size", bd = 5, bg = self.background_colour, font = ('arial', 15), relief = RIDGE)
+        self.pen_size_scale_frame = LabelFrame(self.tools, text = "Brush Size", bd = 5, bg = self.background_colour, font = ('arial', 15), relief = RIDGE)
         self.pen_size_scale_frame.configure(foreground = "white")
         self.pen_size_scale_frame.place(x = 458, y = 0, height = 90, width = 300)
 
@@ -176,19 +171,19 @@ class Paint():
         self.save_button["state"] = NORMAL
         self.canvas_tool_button["state"] = NORMAL
         self.custom_Colour_Button["state"] = NORMAL
+        self.submit_button["state"] = DISABLED
+        self.canvas_button["state"] = DISABLED
 
         self.temproot_height = self.canvas_height_entry.get()
         self.temproot_width = self.canvas_width_entry.get()
         self.root_height = int(self.temproot_height) + 35
         self.root_width = int(self.temproot_width) + 35
-        # print(self.root_height, self.root_width)
         self.canvas = Canvas(self.root, bg = self.canvas_colour, bd = 5, relief = GROOVE, height = self.root_height-35, width = self.root_width-35)
         self.canvas.place(x = 10, y = 10)
         self.canvas.configure(bg = self.colour[1])
         self.eraser_colour = self.colour[1]
         self.root.geometry("{0}x{1}+300+200".format(self.root_width, self.root_height))
         self.canvas.bind("<B1-Motion>", self.paint)
-        self.submit_button.config(state=DISABLED)
 
 
         self.image1 = Image.new("RGB", (self.root_width-35, self.root_height-35), str(self.colour[1]))
@@ -203,8 +198,7 @@ class Paint():
         
         width = self.pen_size.get()
 
-        self.draw.ellipse((x1, y1, x1+width, y1+width), fill = self.pen_colour) # width = self.pen_size
-        
+        self.draw.ellipse((x1, y1, x1+width, y1+width), fill = self.pen_colour) 
 
     def select_colour(self, col):
         self.pen_colour = col
@@ -214,14 +208,16 @@ class Paint():
 
     def canvas_colour_changer(self):
         self.colour = colorchooser.askcolor()
-        self.canvas.delete("all")
-        self.canvas.configure(bg = self.colour[1])
-        self.image1 = Image.new("RGB", (self.root_width-35, self.root_height-35), str(self.colour[1]))
-        self.draw = ImageDraw.Draw(self.image1)
-        self.eraser_colour = self.colour[1]
+        answer = messagebox.askquestion("Clear and Change Colour", "Are you sure?")
+        if answer == "yes":
+            self.canvas.delete("all")
+            self.canvas.configure(bg = self.colour[1])
+            self.image1 = Image.new("RGB", (self.root_width-35, self.root_height-35), str(self.colour[1]))
+            self.draw = ImageDraw.Draw(self.image1)
+            self.eraser_colour = self.colour[1]
 
-        self.canvas_button.configure(bg = self.colour[1], activebackground = self.colour[1])
-        self.canvas_tool_button.configure(bg = self.colour[1], activebackground = self.colour[1])
+            self.canvas_button.configure(bg = self.colour[1], activebackground = self.colour[1])
+            self.canvas_tool_button.configure(bg = self.colour[1], activebackground = self.colour[1])
     
     def canvas_colour_set(self):
         self.colour = colorchooser.askcolor()
@@ -235,19 +231,6 @@ class Paint():
 
     def save(self):
         try:
-            # self.root.focus()
-            # g = str(self.root.wm_geometry())
-            # list_geometry = g.split("+")
-            # root_location = list_geometry[1], list_geometry[2]
-            # str_wxh = list_geometry[0]
-            # list_wxh = str_wxh.split("x")
-            # print(root_location)
-            # print(list_wxh)
-            # # print(int(list_geometry[1])+int(list_wxh[0]), int(list_geometry[2])+int(list_wxh[1]), int(list_geometry[1]), int(list_geometry[2]))
-            # # ImageGrab.grab().crop((int(list_geometry[1])+int(list_wxh[0]), int(list_geometry[2])+int(list_wxh[1]), int(list_geometry[1]), int(list_geometry[2]))).save("filename.png")
-            # # print(int(list_geometry[1]), int(list_geometry[2]), int(list_geometry[1])+int(list_wxh[0]), int(list_geometry[2])+int(list_wxh[1]))
-            # # ImageGrab.grab().crop((int(list_geometry[1]), int(list_geometry[2]), int(list_geometry[1])+int(list_wxh[0]), int(list_geometry[2])+int(list_wxh[1]))).save("filename.png")
-            # ImageGrab.grab().crop((int(list_geometry[1]), int(list_geometry[2]), int(list_geometry[1])+500, int(list_geometry[2])+500)).save("filename.png")
             filename = filedialog.asksaveasfilename(defaultextension = ".png")
             self.image1.save(filename)
             messagebox.showinfo('', 'Image saved in ' + str(filename))        
@@ -255,28 +238,14 @@ class Paint():
             messagebox.showerror('', 'Image unable to save - ' + str(ex))
 
     def test(self):
-        # g = str(self.root.wm_geometry()) # 835x535+300+200
-        # print(g)
-        # list_geometry = g.split("+") # ['835x535', '300', '200']
-        # print(list_geometry)
-        # root_location = list_geometry[1], list_geometry[2] # ('300', '200')
-        # print(root_location)
-        # str_wxh = list_geometry[0] # 835x535
-        # print(str_wxh)
-        # list_wxh = str_wxh.split("x") # ['835', '535']
-        # print(list_wxh)
-        # ImageGrab.grab().crop((int(list_geometry[1])*0.5, 0, int(list_geometry[1])+300, 300)).save("filename.png")
-        # self.retval = self.canvas.postscript(file="test.ps")
-        # ps = self.canvas.postscript(colormode='color')
-        # img = Image.open(io.BytesIO(ps.encode('utf-8')))
-        # img.save('test.jpg')
-        # self.canvas.clipboard_append(self.canvas)
         self.image1.save("test.png")
 
     def clear(self):
-        self.canvas.delete("all")
-        self.image1 = Image.new("RGB", (self.root_width-35, self.root_height-35), str(self.colour[1]))
-        self.draw = ImageDraw.Draw(self.image1)
+        answer = messagebox.askquestion("Clear", "Are you sure?")
+        if answer == "yes":
+            self.canvas.delete("all")
+            self.image1 = Image.new("RGB", (self.root_width-35, self.root_height-35), str(self.colour[1]))
+            self.draw = ImageDraw.Draw(self.image1)
 
 
 ui = Paint()
