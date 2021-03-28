@@ -13,7 +13,6 @@ class Paint():
         self.background_colour = "#303030"
         self.pen_colour = "black"
 
-
         # Canvas Window
         self.root_width = 835
         self.root_height = 535
@@ -70,22 +69,27 @@ class Paint():
         self.eraser_button = Button(self.tools, text = "Eraser", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = self.eraser, width = 12, relief = RIDGE)
         self.eraser_button.configure(foreground = "white")
         self.eraser_button.place(x = 261, y = 10)
+        self.eraser_button["state"] = DISABLED
 
         self.clear_button = Button(self.tools, text = "Clear", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = self.clear, width = 12, relief = RIDGE)
         self.clear_button.configure(foreground = "white")
         self.clear_button.place(x = 261, y = 40)
+        self.clear_button["state"] = DISABLED
 
         self.save_button = Button(self.tools, text = "Export", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = self.save, width = 12, relief = RIDGE)
         self.save_button.configure(foreground = "white")
         self.save_button.place(x = 359, y = 10)
+        self.save_button["state"] = DISABLED
 
         self.canvas_tool_button = Button(self.tools, text = "Canvas Colour", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = self.canvas_colour_changer, width = 12, relief = RIDGE)
         self.canvas_tool_button.configure(foreground = "white")
         self.canvas_tool_button.place(x = 359, y = 40)
+        self.canvas_tool_button["state"] = DISABLED
 
         self.custom_Colour_Button = Button(self.tools, text = "Custom Brush Colour", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = self.custom_colour, width = 26, height = 1, relief = RIDGE)
         self.custom_Colour_Button.configure(foreground = "white")
         self.custom_Colour_Button.place(x = 261, y = 70)
+        self.custom_Colour_Button["state"] = DISABLED
 
 
         self.pen_size_scale_frame = LabelFrame(self.tools, text = "Size", bd = 5, bg = self.background_colour, font = ('arial', 15), relief = RIDGE)
@@ -167,6 +171,12 @@ class Paint():
         messagebox.showinfo('About','Made by Thomas Preston')
     
     def new_canvas(self):
+        self.eraser_button["state"] = NORMAL
+        self.clear_button["state"] = NORMAL
+        self.save_button["state"] = NORMAL
+        self.canvas_tool_button["state"] = NORMAL
+        self.custom_Colour_Button["state"] = NORMAL
+
         self.temproot_height = self.canvas_height_entry.get()
         self.temproot_width = self.canvas_width_entry.get()
         self.root_height = int(self.temproot_height) + 35
