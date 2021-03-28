@@ -27,6 +27,8 @@ class Paint():
         self.root.title("Canvas")
         self.root.resizable(False, False)
         self.root.configure(bg=self.background_colour)
+
+        self.root.iconbitmap('Paintbrush.ico')
         
         # self.canvas = Canvas(self.root, bg = self.canvas_colour, bd = 5, relief = GROOVE, height = self.root_height-35, width = self.root_width-35)
         # self.canvas.place(x = 10, y = 10)
@@ -42,6 +44,8 @@ class Paint():
         self.tools.title("Tools")
         self.tools.resizable(False, False)
         self.tools.configure(bg=self.background_colour)
+
+        self.tools.iconbitmap('Paintbrush.ico')
 
 
         self.colour_frame = LabelFrame(self.tools, text = "Colours", font = ('arial', 15), bd = 5, relief = RIDGE, bg = self.background_colour)
@@ -67,7 +71,7 @@ class Paint():
         self.eraser_button.configure(foreground = "white")
         self.eraser_button.place(x = 261, y = 10)
 
-        self.clear_button = Button(self.tools, text = "Clear", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = lambda : self.canvas.delete("all"), width = 12, relief = RIDGE)
+        self.clear_button = Button(self.tools, text = "Clear", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = self.clear, width = 12, relief = RIDGE)
         self.clear_button.configure(foreground = "white")
         self.clear_button.place(x = 261, y = 40)
 
@@ -75,9 +79,9 @@ class Paint():
         self.save_button.configure(foreground = "white")
         self.save_button.place(x = 359, y = 10)
 
-        self.canvas_button = Button(self.tools, text = "Canvas Colour", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = self.canvas_colour_changer, width = 12, relief = RIDGE)
-        self.canvas_button.configure(foreground = "white")
-        self.canvas_button.place(x = 359, y = 40)
+        self.canvas_tool_button = Button(self.tools, text = "Canvas Colour", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = self.canvas_colour_changer, width = 12, relief = RIDGE)
+        self.canvas_tool_button.configure(foreground = "white")
+        self.canvas_tool_button.place(x = 359, y = 40)
 
         self.custom_Colour_Button = Button(self.tools, text = "Custom Brush Colour", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = self.custom_colour, width = 26, height = 1, relief = RIDGE)
         self.custom_Colour_Button.configure(foreground = "white")
@@ -103,6 +107,8 @@ class Paint():
         self.can.resizable(False, False)
         self.can.configure(bg=self.background_colour)
 
+        self.can.iconbitmap('Paintbrush.ico')
+
 
         self.canvas_prop_frame = LabelFrame(self.can, text = "Canvas Menu", bd = 5, bg = self.background_colour, font = ('arial', 15), relief = RIDGE)
         self.canvas_prop_frame.configure(foreground = "white")
@@ -125,17 +131,28 @@ class Paint():
         self.canvas_height_entry.place(x = 100, y = 35)
 
 
-        self.submit_button = Button(self.canvas_prop_frame, text = "Create Canvas", command = self.new_canvas, width = 22)
-        self.submit_button.place(x = 5, y = 65)
+        self.colour = self.background_colour
+        self.canvas_button = Button(self.canvas_prop_frame, text = "Canvas Colour", bd = 4, bg = self.colour, activebackground = self.colour, command = self.canvas_colour_set, width = 22, relief = RIDGE)
+        self.canvas_button.configure(foreground = "white")
+        self.canvas_button.place(x = 5, y = 65)
+
+        self.submit_button = Button(self.canvas_prop_frame, text = "Create Canvas", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = self.new_canvas, width = 22, relief = RIDGE)
+        self.submit_button.configure(foreground = "white")
+        self.submit_button.place(x = 5, y = 95)
 
 
         self.canvas_height_label = Label(self.canvas_prop_frame, text = "Recommended: 800x500", bg = self.background_colour)
         self.canvas_height_label.configure(foreground = "white")
-        self.canvas_height_label.place(x = 5, y = 95)
+        self.canvas_height_label.place(x = 5, y = 125)
 
 
-        self.exit_button = Button(self.canvas_prop_frame, text = "Quit", command = self.leaving, width = 5)
-        self.exit_button.place(x = 130, y = 430)
+        self.exit_button = Button(self.canvas_prop_frame, text = "Quit", command = self.leaving, width = 5, bd = 4, bg = self.background_colour, activebackground = self.background_colour, relief = RIDGE)
+        self.exit_button.configure(foreground = "white")
+        self.exit_button.place(x = 125, y = 425)
+
+        self.about_button = Button(self.canvas_prop_frame, text = "About", command = self.about, width = 5, bd = 4, bg = self.background_colour, activebackground = self.background_colour, relief = RIDGE)
+        self.about_button.configure(foreground = "white")
+        self.about_button.place(x = 5, y = 425)
     
 
 
@@ -146,6 +163,9 @@ class Paint():
         if answer == "yes":
             exit()
     
+    def about(self):
+        messagebox.showinfo('About','Made by Thomas Preston')
+    
     def new_canvas(self):
         self.temproot_height = self.canvas_height_entry.get()
         self.temproot_width = self.canvas_width_entry.get()
@@ -154,12 +174,14 @@ class Paint():
         # print(self.root_height, self.root_width)
         self.canvas = Canvas(self.root, bg = self.canvas_colour, bd = 5, relief = GROOVE, height = self.root_height-35, width = self.root_width-35)
         self.canvas.place(x = 10, y = 10)
+        self.canvas.configure(bg = self.colour[1])
+        self.eraser_colour = self.colour[1]
         self.root.geometry("{0}x{1}+300+200".format(self.root_width, self.root_height))
         self.canvas.bind("<B1-Motion>", self.paint)
         self.submit_button.config(state=DISABLED)
 
 
-        self.image1 = Image.new("RGB", (self.root_width-35, self.root_height-35), "white")
+        self.image1 = Image.new("RGB", (self.root_width-35, self.root_height-35), str(self.colour[1]))
         self.draw = ImageDraw.Draw(self.image1)
         
 
@@ -181,9 +203,21 @@ class Paint():
         self.pen_colour = self.eraser_colour
 
     def canvas_colour_changer(self):
-        colour = colorchooser.askcolor()
-        self.canvas.configure(bg = colour[1])
-        self.eraser_colour = colour[1]
+        self.colour = colorchooser.askcolor()
+        self.canvas.delete("all")
+        self.canvas.configure(bg = self.colour[1])
+        self.image1 = Image.new("RGB", (self.root_width-35, self.root_height-35), str(self.colour[1]))
+        self.draw = ImageDraw.Draw(self.image1)
+        self.eraser_colour = self.colour[1]
+
+        self.canvas_button.configure(bg = self.colour[1], activebackground = self.colour[1])
+        self.canvas_tool_button.configure(bg = self.colour[1], activebackground = self.colour[1])
+    
+    def canvas_colour_set(self):
+        self.colour = colorchooser.askcolor()
+
+        self.canvas_button.configure(bg = self.colour[1], activebackground = self.colour[1])
+        self.canvas_tool_button.configure(bg = self.colour[1], activebackground = self.colour[1])
 
     def custom_colour(self):
         colour = colorchooser.askcolor()
@@ -228,5 +262,12 @@ class Paint():
         # img.save('test.jpg')
         # self.canvas.clipboard_append(self.canvas)
         self.image1.save("test.png")
+
+    def clear(self):
+        self.canvas.delete("all")
+        self.image1 = Image.new("RGB", (self.root_width-35, self.root_height-35), str(self.colour[1]))
+        self.draw = ImageDraw.Draw(self.image1)
+
+
 ui = Paint()
 ui.main()
