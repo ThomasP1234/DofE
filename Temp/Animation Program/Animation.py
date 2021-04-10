@@ -4,6 +4,14 @@ from tkinter import *
 from PIL import Image, ImageDraw, ImageTk
 from time import sleep
 
+'''
+Todo
+- Add scroll bar to slide deck
+- Add scroll bar to control play back speed
+- Add check box for loop of animation
+- Add shadow of previous frame
+- Add save and load
+'''
 
 class Animation():
     def main(self):
