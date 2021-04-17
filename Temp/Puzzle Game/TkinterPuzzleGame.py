@@ -4,6 +4,8 @@ from tkinter import *
 import config as c
 
 class HangmanGUI():
+    player_location = c.Player_Location
+
     window_width = 800
     window_height = 500
     window_x = 200
@@ -14,8 +16,8 @@ class HangmanGUI():
     commands_x = window_x + window_width + 10
     commands_y = window_y
 
-    # commands2_x = commands_x + commands_width + 10
-    # commands2_y = window_y
+    commands2_x = commands_x + commands_width + 10
+    commands2_y = window_y
 
     inventory_height = 50
     inventory_x = window_x
@@ -24,6 +26,21 @@ class HangmanGUI():
     background_colour = "#303030"
 
     DEBUGMode = False
+
+
+    filename = "Gamesave.json"
+
+    data = {
+        "playerlocation" : c.Player_Location,
+        "playerinventory" : c.Player_Inventory,
+        "East1": c.Rooms["Room1"]["Exits"]["East"]['State'],
+        "West2": c.Rooms["Room2"]["Exits"]["West"]['State'],
+        "North2": c.Rooms["Room2"]["Exits"]["North"]['State'],
+        "South3": c.Rooms["Room3"]["Exits"]["South"]['State'],
+        "Items1": c.Rooms["Room1"]["Items"],
+        "Items2": c.Rooms["Room2"]["Items"],
+        "Items3": c.Rooms["Room3"]["Items"]
+    }
 
     def __init__(self):
         self.window = Tk()
@@ -46,11 +63,11 @@ class HangmanGUI():
         self.commands.configure(bg = self.background_colour)
         # self.commands.iconbitmap('Icon.ico')
 
-        # self.commands2 = Toplevel(self.window)
-        # self.commands2.geometry("{0}x{1}+{2}+{3}".format(self.commands_width, self.commands_height, self.commands2_x, self.commands2_y))
-        # self.commands2.title("Commands")
-        # self.commands2.resizable(False, False)
-        # self.commands2.configure(bg = self.background_colour)
+        self.commands2 = Toplevel(self.window)
+        self.commands2.geometry("{0}x{1}+{2}+{3}".format(self.commands_width, self.commands_height, self.commands2_x, self.commands2_y))
+        self.commands2.title("Commands")
+        self.commands2.resizable(False, False)
+        self.commands2.configure(bg = self.background_colour)
         # self.commands.iconbitmap('Icon.ico')
 
         self.window.focus_force()
@@ -192,27 +209,43 @@ class HangmanGUI():
 
 
 
-        # lblf4 = LabelFrame(self.commands2, text = "Crafting", bd = 4, bg = self.background_colour, relief = RIDGE)
-        # lblf4.configure(foreground = "white")
-        # lblf4.grid(row = 0, column = 0)
+        lblf4 = LabelFrame(self.commands2, text = "Crafting", bd = 4, bg = self.background_colour, relief = RIDGE)
+        lblf4.configure(foreground = "white")
+        lblf4.grid(row = 0, column = 0)
 
-        # lbl3  = Label(lblf4, text = "Item 1:", bg = self.background_colour, foreground = "white")
-        # lbl3.grid(row = 0, column = 0)
+        craftButton = Button(lblf4, text = "Craft", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = self.craft, width = 24, relief = RIDGE, foreground = "white")
+        craftButton.grid(row = 0, column = 0)
 
-        # self.crafting1 = Entry(lblf4, width = 29, bd = 4, bg = self.background_colour, relief = RIDGE, foreground = "white")
-        # self.crafting1.grid(row = 1, column = 0)
+        lbl3  = Label(lblf4, text = "Item 1:                                              ", bg = self.background_colour, foreground = "white")
+        lbl3.grid(row = 1, column = 0)
 
-        # lbl4 = Label(lblf4, text = "Item 2:", bg = self.background_colour, foreground = "white")
-        # lbl4.grid(row = 2, column = 0)
+        self.crafting1 = Entry(lblf4, width = 29, bd = 4, bg = self.background_colour, relief = RIDGE, foreground = "white")
+        self.crafting1.grid(row = 2, column = 0)
 
-        # self.crafting2 = Entry(lblf4, width = 29, bd = 4, bg = self.background_colour, relief = RIDGE, foreground = "white")
-        # self.crafting2.grid(row = 3, column = 0)
+        lbl4 = Label(lblf4, text = "Item 2:                                             ", bg = self.background_colour, foreground = "white")
+        lbl4.grid(row = 3, column = 0)
 
-        # self.lbl5 = Label(lblf4, text = "Output:", bg = self.background_colour, foreground = "white")
-        # self.lbl5.grid(row = 4, column = 0)
+        self.crafting2 = Entry(lblf4, width = 29, bd = 4, bg = self.background_colour, relief = RIDGE, foreground = "white")
+        self.crafting2.grid(row = 4, column = 0)
+
+        lbl5 = Label(lblf4, text = "Item 3:                                (Optional)", bg = self.background_colour, foreground = "white")
+        lbl5.grid(row = 5, column = 0)
+
+        self.crafting3 = Entry(lblf4, width = 29, bd = 4, bg = self.background_colour, relief = RIDGE, foreground = "white")
+        self.crafting3.grid(row = 6, column = 0)
+
+
+        # lblf5 = LabelFrame(self.commands2, text = "Load and Save", bd = 4, bg = self.background_colour, relief = RIDGE, foreground = "white")
+        # lblf5.grid(row = 1, column = 0)
+
+        # saveButton = Button(lblf5, text = "Save", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = self.Save, width = 24, relief = RIDGE, foreground = "white")
+        # saveButton.grid(row = 0, column = 0)
+
+        # loadButton = Button(lblf5, text = "Load", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = self.Load, width = 24, relief = RIDGE, foreground = "white")
+        # loadButton.grid(row = 1, column = 0)
 
     def game(self):
-        self.player_location = c.Player_Location
+        pass
 
         
     def explore(self):
@@ -288,7 +321,10 @@ class HangmanGUI():
         self.searchButtonState()
 
         import DrawMap
-        DrawMap.GameMap(self.player_location, self.canvas, self.NorthButton, c.Rooms[self.player_location]["Exits"]["North"]["State"], self.EastButton, c.Rooms[self.player_location]["Exits"]["East"]["State"], self.SouthButton, c.Rooms[self.player_location]["Exits"]["South"]["State"], self.WestButton, c.Rooms[self.player_location]["Exits"]["West"]["State"])
+        if GoingTo == 'Exit':
+            DrawMap.EndMap(self.canvas, self.NorthButton, self.EastButton, self.SouthButton, self.WestButton)
+        else:
+            DrawMap.GameMap(self.player_location, self.canvas, self.NorthButton, c.Rooms[self.player_location]["Exits"]["North"]["State"], self.EastButton, c.Rooms[self.player_location]["Exits"]["East"]["State"], self.SouthButton, c.Rooms[self.player_location]["Exits"]["South"]["State"], self.WestButton, c.Rooms[self.player_location]["Exits"]["West"]["State"])
 
     def UpdateInventory(self):
         self.lbl5.config(text = "Inventory: {0}".format(c.Player_Inventory))
@@ -322,7 +358,14 @@ class HangmanGUI():
         num = self.player_location.replace('Room', '')
         doornum = doorinput + num
         if iteminput in c.Player_Inventory:
-            if iteminput in c.Key:
+            if iteminput == 'Master Key':
+                self.canvas.delete('all')
+                self.searchButtonState()
+                self.UpdateInventory()
+                c.Rooms[self.player_location]['Exits'][doorinput].update({'State': 'Unlocked'})
+                import DrawMap
+                DrawMap.GameMap(self.player_location, self.canvas, self.NorthButton, c.Rooms[self.player_location]["Exits"]["North"]["State"], self.EastButton, c.Rooms[self.player_location]["Exits"]["East"]["State"], self.SouthButton, c.Rooms[self.player_location]["Exits"]["South"]["State"], self.WestButton, c.Rooms[self.player_location]["Exits"]["West"]["State"])
+            elif iteminput in c.Key:
                 if iteminput == c.Rooms[self.player_location]['Exits'][doorinput]['Key']:
                     if doorinput in c.outputRooms[self.player_location]:
                         if c.Rooms[self.player_location]['Exits'][doorinput]['State'] == 'Locked':
@@ -338,13 +381,58 @@ class HangmanGUI():
                             c.Rooms[out]['Exits'][link].update({'State': 'Unlocked'})
                             import DrawMap
                             DrawMap.GameMap(self.player_location, self.canvas, self.NorthButton, c.Rooms[self.player_location]["Exits"]["North"]["State"], self.EastButton, c.Rooms[self.player_location]["Exits"]["East"]["State"], self.SouthButton, c.Rooms[self.player_location]["Exits"]["South"]["State"], self.WestButton, c.Rooms[self.player_location]["Exits"]["West"]["State"])
+                else:
+                    self.lbl1.config(text = 'Wrong Door for this key')
+                    self.lbl3.config(text = '')
 
     def DEBUG(self):
         self.DEBUGMode = True
         self.DEBUGButton.config(state = "disabled")
 
+    # def Load(self):
+    #     import json
+    #     fi = open(self.filename, "r")
+    #     self.data = fi.read()
+    #     jsondata = json.loads(self.data)
+    #     if self.DEBUGMode == True: print(self.data, jsondata)
+    #     self.player_location = c.Player_Location = jsondata["playerlocation"]
+    #     c.Player_Inventory = jsondata["playerinventory"]
+    #     c.East1['State'] = jsondata["East1"]
+    #     c.West2['State'] = jsondata["West2"]
+    #     c.North2['State'] = jsondata["North2"]
+    #     c.South3['State'] = jsondata["South3"]
+    #     c.Items1 = jsondata["Items1"]
+    #     c.Items2 = jsondata["Items2"]
+    #     c.Items3 = jsondata["Items3"]
+
+    #     self.canvas.delete('all')
+    #     import DrawMap
+    #     DrawMap.GameMap(self.player_location, self.canvas, self.NorthButton, c.Rooms[self.player_location]["Exits"]["North"]["State"], self.EastButton, c.Rooms[self.player_location]["Exits"]["East"]["State"], self.SouthButton, c.Rooms[self.player_location]["Exits"]["South"]["State"], self.WestButton, c.Rooms[self.player_location]["Exits"]["West"]["State"])
+
+    #     self.UpdateInventory()
+        
+    # def Save(self):
+    #     import json
+    #     with open(self.filename, 'w') as outfile:
+    #         json.dump(self.data, outfile)
+
+    def craft(self):
+        item1 = self.crafting1.get()
+        item2 = self.crafting2.get()
+        item3 = self.crafting3.get()
+        if item1 in c.Player_Inventory and item2 in c.Player_Inventory and item3 in c.Player_Inventory:
+            if item1 in c.Craftitems and item2 in c.Craftitems and item3 in c.Craftitems:
+                for key in c.Crafts3:
+                    L2 = list(c.Crafts3[key])
+                    if item1 in L2 and item2 in L2 and item3 in L2:
+                        c.Player_Inventory.remove(item1)
+                        c.Player_Inventory.remove(item2)
+                        c.Player_Inventory.remove(item3)
+                        c.Player_Inventory.append(key)
+                        self.UpdateInventory()
+
     def run(self):
-        self.game()
+        # self.game()
         self.draw()
         self.searchButtonState()
         self.window.mainloop()

@@ -24,7 +24,7 @@ def GameMap(room, canvas, north, nstate, east, estate, south, sstate, west, wsta
     if room == "Room2":
         DrawNorthDoor(canvas, nstate, north)
         DrawEastWall(canvas)
-        DrawSouthWall(canvas)
+        DrawSouthDoor(canvas, sstate, south)
         DrawWestDoor(canvas, wstate, west)
 
     if room == "Room3":
@@ -32,6 +32,25 @@ def GameMap(room, canvas, north, nstate, east, estate, south, sstate, west, wsta
         DrawEastDoor(canvas, estate, north)
         DrawSouthDoor(canvas, sstate, south)
         DrawWestWall(canvas)
+
+    if room == "Room4":
+        DrawNorthDoor(canvas, nstate, north)
+        DrawEastDoor(canvas, estate, east)
+        DrawSouthWall(canvas)
+        DrawWestWall(canvas)   
+
+def EndMap(canvas, north, east, south, west):
+    north.config(state = "disabled")
+    east.config(state = "disabled")
+    south.config(state = "disabled")
+    west.config(state = "disabled")
+
+    DrawNorthWall(canvas)
+    DrawEastWall(canvas)
+    DrawSouthWall(canvas)
+    DrawWestWall(canvas)
+
+    canvas.create_text(130, 110, text = "You Win!!!", font = "Orbitron 30", fill = "red")
 
 def DrawNorthWall(canvas):
     canvas.create_line(15, 25, 250, 25, width = width, fill = lineColour)
