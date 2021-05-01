@@ -89,15 +89,16 @@ class HigherLower():
         self.card8.image = img
         self.card8.grid(row = 1, column = 3)
         
-        self.cards = []
-        self.cards.append(self.card1)
-        self.cards.append(self.card2)
-        self.cards.append(self.card3)
-        self.cards.append(self.card4)
-        self.cards.append(self.card5)
-        self.cards.append(self.card6)
-        self.cards.append(self.card7)
-        self.cards.append(self.card8)
+        self.cards = [
+            self.card1,
+            self.card2,
+            self.card3,
+            self.card4,
+            self.card5,
+            self.card6,
+            self.card7,
+            self.card8
+        ]
 
         f2 = LabelFrame(self.window, bg = self.background_colour, fg = self.background_colour, bd = 0)
         f2.pack()
