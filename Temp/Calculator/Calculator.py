@@ -19,11 +19,14 @@ class Calc():
         self.window.iconbitmap("Calc.ico")
 
     def draw(self):
-        placeholder = Label(self.window, text = " ", bg = self.background_colour, fg = self.background_colour)
+        placeholder = Label(self.window, text = "           ", bg = self.background_colour, fg = self.background_colour)
         placeholder.grid(row = 0, column = 0, rowspan = 10)
 
+        placeholder = Label(self.window, text = "           ", bg = self.background_colour, fg = self.background_colour)
+        placeholder.grid(row = 0, column = 0)
+
         lblf = LabelFrame(self.window, bd = 5, relief = RIDGE, bg = "white", fg = "white")
-        lblf.grid(row = 2, column = 0, columnspan = 4)
+        lblf.grid(row = 1, column = 1, columnspan = 4)
 
         self.lbl = Label(lblf, text = "", bg = "white", fg = "white")
         self.lbl.pack()
@@ -32,25 +35,25 @@ class Calc():
         placehold.pack()
 
         placeholder2 = Label(self.window, text = " ", bg = self.background_colour, fg = self.background_colour)
-        placeholder2.grid(row = 2, column = 0, columnspan = 3)
+        placeholder2.grid(row = 2, column = 1, columnspan = 3)
 
         # lblf2 = LabelFrame(self.window, bd = 0, bg = self.background_colour, fg = self.background_colour)
         # lblf2.grid(row = 4, column = 0, rowspan = 4, columnspan = 2)
         
         row = 3
-        column = 2
+        column = 3
         columnspan = 1
         width = 2
         for i in range(0, 10):
             if row == 6:
-                column = 0
+                column = 1
                 columnspan = 2
                 width = 5
             i = 9 - i
             btn = Button(self.window, text = i, font = "arial 25", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = lambda num = i: self.math(num), relief = RIDGE, fg = "white", width = width)
             btn.grid(row = row, column = column, columnspan = columnspan)
-            if column == 0:
-                column = 2
+            if column == 1:
+                column = 3
                 row += 1
                 continue
             column -= 1
@@ -58,12 +61,12 @@ class Calc():
         width = 2
 
         btn = Button(self.window, text = ".", font = "arial 25", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = None, relief = RIDGE, fg = "white", width = width)
-        btn.grid(row = 6, column = 2)
+        btn.grid(row = 6, column = 3)
         # lblf3 = LabelFrame(self.window, bd = 0, bg = self.background_colour, fg = self.background_colour)
         # lblf3.grid(row = 4, column = 2, rowspan = 5)
 
         row = 3
-        column = 3
+        column = 4
         for i in ["÷", "×", "-", "+", "="]:
             btn = Button(self.window, text = i, font = "arial 25", bd = 4, bg = self.background_colour, activebackground = self.background_colour, command = None, relief = RIDGE, fg = "white", width = width)
             btn.grid(row = row, column = column)
