@@ -3,6 +3,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from tkinter import *
+import matplotlib.animation as animation
 
 # def f(x, a, b, c):
 #     return a*x**2+b*x*c
@@ -107,7 +108,7 @@ class Calc():
         self.memory = ""
         self.sym = ""
         self.text = ""
-        
+
         self.sety(y)
 
     def sety(self, y):
