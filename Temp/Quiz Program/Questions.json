@@ -1,14 +1,27 @@
 {
+    "Amount": 4,
     "1": {
-        "Q": "What is the highest mountain in Britain?",
+        "Q": "What is the highest\nmountain in Britain?",
         "Ben Nevis": "True",
         "Snowdon": "False",
         "Scafell Pike": "False"
     },
     "2": {
-        "Q": "How many players are there in a rugby league team?",
+        "Q": "How many players are\nthere in a rugby league\nteam?",
         "14": "False",
         "11": "False",
         "13": "True"
+    },
+    "3": {
+        "Q": "What is the capital of\nAustralia?",
+        "Sydney": "False",
+        "Canberra": "True",
+        "Perth": "False"
+    },
+    "4": {
+        "Q": "What is the Chinese New Year animal for 2021?",
+        "Rat": "False",
+        "Ox": "True",
+        "Dragon": "False"
     }
 }
